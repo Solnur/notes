@@ -5,6 +5,10 @@ import {Input} from 'src/components/input';
 const styles = require('src/pages/login/login.module.scss');
 
 export const Login: React.FC = () => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log('log', e.target.value);
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.formContainer}>
@@ -12,10 +16,14 @@ export const Login: React.FC = () => {
 
                 <Input styles={styles.input}
                        label={'User name or email'}
+                       onChange={onChange}
+                       required={true}
                        type={'email'}/>
 
                 <Input styles={styles.input}
                        label={'Password'}
+                       onChange={onChange}
+                       required={true}
                        type={'password'}/>
 
                 <MyButton styles={styles.button}
@@ -23,7 +31,7 @@ export const Login: React.FC = () => {
                           variant='contained'/>
 
                 <MyButton styles={styles.forgotPwdBtn}
-                          title={'Forgot password'}/>
+                          title={'Forgot password ?'}/>
             </div>
         </div>
     );

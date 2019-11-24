@@ -4,20 +4,22 @@ import TextField from '@material-ui/core/TextField';
 type Props = {
     label: string;
     type: string;
+    required?: boolean,
     styles?: string;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const Input: React.FC <Props> = props => {
     return (
         <div className={props.styles}>
             <TextField
-                label={props.label}
-                margin="normal"
-                variant="outlined"
-                type={props.type}
-                autoComplete="email"
-                required={true}
                 fullWidth={true}
+                variant="outlined"
+                label={props.label}
+                onChange={props.onChange}
+                margin="normal"
+                type={props.type}
+                required={props.required}
             />
         </div>
     );
