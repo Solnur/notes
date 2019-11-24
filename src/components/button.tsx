@@ -5,7 +5,7 @@ type Props = {
     variant?: any;
     title: string;
     styles?: string;
-};
+}
 
 export const MyButton: React.FC<Props> = props => {
     return (
