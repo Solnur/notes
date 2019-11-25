@@ -22,7 +22,6 @@ const Login: React.FC<any> = ({history}) => {
     const handleLogin = useCallback(
         async () => {
             try {
-                console.log('log', email, password);
                 await app
                     .auth()
                     .signInWithEmailAndPassword(email, password);
