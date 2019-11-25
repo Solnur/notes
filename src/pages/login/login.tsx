@@ -22,6 +22,7 @@ const Login: React.FC<any> = ({history}) => {
     const handleLogin = useCallback(
         async () => {
             try {
+                console.log('log', email, password);
                 await app
                     .auth()
                     .signInWithEmailAndPassword(email, password);
@@ -29,7 +30,7 @@ const Login: React.FC<any> = ({history}) => {
             } catch (error) {
                 alert(error);
             }
-        }, [history]
+        }, [email, password]
     );
 
     const {currentUser} = useContext(AuthContext);
