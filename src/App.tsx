@@ -1,13 +1,11 @@
 import React from 'react';
+import {renderRoutes} from 'react-router-config';
 import 'typeface-roboto';
 import './App.css';
-import {Login} from 'src/pages/login/login';
 
-const App: React.FC = () => {
+const App: React.FC<any> = ({route}) => {
     return (
-        <>
-            <Login/>
-        </>
+        <>{renderRoutes(route.routes)}</>
     );
 };
 

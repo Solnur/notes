@@ -1,13 +1,42 @@
-import React from 'react';
-import {MyButton} from "src/components/button";
+import React, {useCallback, useContext, useState} from 'react';
+import {withRouter, Redirect} from 'react-router';
+import {MyButton} from 'src/components/button';
 import {Input} from 'src/components/input';
+import {AuthContext} from 'src/components/auth';
+import app from 'src/lib/firebase';
 
 const styles = require('src/pages/login/login.module.scss');
 
-export const Login: React.FC = () => {
+const Login: React.FC<any> = ({history}) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log('log', e.target.value);
+        setEmail(e.target.value);
     };
+
+    const handlePwd = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(e.target.value);
+    };
+
+    const handleLogin = useCallback(
+        async () => {
+            try {
+                await app
+                    .auth()
+                    .signInWithEmailAndPassword(email, password);
+                history.push('/');
+            } catch (error) {
+                alert(error);
+            }
+        }, [history]
+    );
+
+    const {currentUser} = useContext(AuthContext);
+
+    if (currentUser) {
+        return <Redirect to="/"/>;
+    }
 
     return (
         <div className={styles.container}>
@@ -22,13 +51,14 @@ export const Login: React.FC = () => {
 
                 <Input styles={styles.input}
                        label={'Password'}
-                       onChange={onChange}
+                       onChange={handlePwd}
                        required={true}
                        type={'password'}/>
 
                 <MyButton styles={styles.button}
                           title={'Log in'}
-                          variant='contained'/>
+                          variant='contained'
+                          onClick={handleLogin}/>
 
                 <MyButton styles={styles.forgotPwdBtn}
                           title={'Forgot password ?'}/>
@@ -36,3 +66,5 @@ export const Login: React.FC = () => {
         </div>
     );
 };
+
+export default withRouter(Login);
