@@ -11,9 +11,9 @@ const Login: React.FC<any> = ({history}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
-    };
+    }, []);
 
     const handlePwd = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(e.target.value);
@@ -29,7 +29,7 @@ const Login: React.FC<any> = ({history}) => {
             } catch (error) {
                 alert(error);
             }
-        }, [email, password]
+        }, [history, email, password]
     );
 
     const {currentUser} = useContext(AuthContext);
