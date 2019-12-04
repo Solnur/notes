@@ -2,6 +2,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 
 type Props = {
+    ref?: any;
     label: string;
     type: string;
     required?: boolean,
@@ -20,6 +21,9 @@ export const Input: React.FC <Props> = props => {
                 margin="normal"
                 type={props.type}
                 required={props.required}
+                inputProps={
+                    {maxLength: 30}
+                }
             />
         </div>
     );

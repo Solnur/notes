@@ -19,6 +19,13 @@
   border-radius: $borderRadiusMid;
 }
 
+.form {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  width: 100%;
+}
+
 .title {
   font-size: $title;
   font-weight: 500;

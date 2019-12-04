@@ -1,28 +1,32 @@
-import React, {useCallback, useContext, useState} from 'react';
+import React, {useCallback, useContext, useRef, useState} from 'react';
 import {withRouter, Redirect} from 'react-router';
 import {MyButton} from 'src/components/button';
 import {Input} from 'src/components/input';
 import {AuthContext} from 'src/components/auth';
-import app from 'src/lib/firebase';
+import firebaseApp from 'src/lib/firebase';
 
 const styles = require('src/pages/login/login.module.scss');
 
 const Login: React.FC<any> = ({history}) => {
     const [email, setEmail] = useState('');
+    const emailRef = useRef();
     const [password, setPassword] = useState('');
 
     const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
+        // setEmail(e.target.value);
     }, []);
 
     const handlePwd = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.target.value);
+        // setPassword(e.target.value);
     };
 
     const handleLogin = useCallback(
-        async () => {
+        async (event) => {
+            event.preventDefault();
+            console.log('log', emailRef);
+
             try {
-                await app
+                await firebaseApp
                     .auth()
                     .signInWithEmailAndPassword(email, password);
                 history.push('/');
@@ -43,25 +47,28 @@ const Login: React.FC<any> = ({history}) => {
             <div className={styles.formContainer}>
                 <p className={styles.title}>Log in</p>
 
-                <Input styles={styles.input}
-                       label={'User name or email'}
-                       onChange={onChange}
-                       required={true}
-                       type={'email'}/>
+                <form className={styles.form} onSubmit={handleLogin}>
+                    <Input styles={styles.input}
+                           label={'User name or email'}
+                           onChange={onChange}
+                           required={true}
+                           type={'email'}/>
 
-                <Input styles={styles.input}
-                       label={'Password'}
-                       onChange={handlePwd}
-                       required={true}
-                       type={'password'}/>
+                    <Input styles={styles.input}
+                           label={'Password'}
+                           onChange={handlePwd}
+                           required={true}
+                           type={'password'}/>
 
-                <MyButton styles={styles.button}
-                          title={'Log in'}
-                          variant='contained'
-                          onClick={handleLogin}/>
+                    <MyButton styles={styles.button}
+                              title={'Log in'}
+                              variant='contained'
+                              onClick={handleLogin}/>
 
-                <MyButton styles={styles.forgotPwdBtn}
-                          title={'Forgot password ?'}/>
+                    <MyButton type={'submit'} styles={styles.forgotPwdBtn}
+                              title={'Forgot password ?'}/>
+                </form>
+
             </div>
         </div>
     );
